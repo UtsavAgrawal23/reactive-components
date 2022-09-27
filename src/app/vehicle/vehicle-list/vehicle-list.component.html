@@ -1,13 +1,14 @@
 <div class="card">
   <div class="card-header">
-  {{pageTitle}}
-</div>
+    {{ pageTitle }}
+  </div>
 
   <div class="card-body" *ngIf="vm$ | async as vm">
     <select
       class="form-select"
       aria-label="Vehicle classification list"
       style="margin-bottom: 10px;"
+      (change)="onVehicleClassSelected($any($event.target).value)"
     >
       <option value="">- Display All -</option>
       <option
