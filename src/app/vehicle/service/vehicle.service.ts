@@ -48,6 +48,11 @@ export class VehicleService {
     catchError(this.handleError)
   );
 
+  // emits the selected vehicle class
+  vehicleClassSelected(vehicleClass: string): void {
+    this.vehicleClassSubject.next(vehicleClass);
+  }
+
   private handleError(err: HttpErrorResponse): Observable<never> {
     let errorMessage = '';
     if (err.error instanceof ErrorEvent) {

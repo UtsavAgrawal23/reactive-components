@@ -21,4 +21,10 @@ export class VehicleListComponent {
   vm$ = combineLatest([this.vehicleClasses$, this.vehicles$]).pipe(
     map(([vehicleClasses, vehicles]) => ({ vehicles, vehicleClasses }))
   );
+
+  // Trigger when select vehicle class from dropdown
+  // Emits the selected vehicle class
+  onVehicleClassSelected(vehicleClass: string) {
+    this.vehicleService.vehicleClassSelected(vehicleClass);
+  }
 }
