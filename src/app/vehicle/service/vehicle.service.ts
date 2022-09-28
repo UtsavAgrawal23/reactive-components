@@ -41,6 +41,7 @@ export class VehicleService {
   //vehicle selected
 
   seletedVehicle$ = this.vehicleSeleted$.pipe(
+    tap((name) => console.log(name)),
     switchMap((vehicleName) =>
       vehicleName.length
         ? this.http
@@ -83,6 +84,7 @@ export class VehicleService {
   }
 
   onVehicleSelected(vehicle: string) {
+    console.log("aaa")
     this.vehicleSelectedSubject.next(vehicle);
   }
 

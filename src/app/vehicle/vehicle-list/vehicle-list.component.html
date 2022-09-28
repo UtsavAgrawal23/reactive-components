@@ -24,7 +24,8 @@
         type="button"
         class="list-group-item"
         *ngFor="let vehicle of vehicles$ | async"
-        (click)="onVehicleClassSelected(vehicle.name)"
+        [ngClass]="{ active: vehicle?.name === vm.selectedVehicle?.name }"
+        (click)="onVehicleSelected(vehicle.name)"
       >
         {{ vehicle.name }}
       </button>
