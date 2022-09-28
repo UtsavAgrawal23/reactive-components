@@ -27,4 +27,9 @@ export class VehicleListComponent {
   onVehicleClassSelected(vehicleClass: string) {
     this.vehicleService.vehicleClassSelected(vehicleClass);
   }
+
+  onVehicleSelected(vehicle: string) {
+    console.log(vehicle);
+    this.vehicleService.onVehicleSelected(vehicle);
+  }
 }

@@ -8,7 +8,10 @@ import {
   expand,
   map,
   Observable,
+  of,
   reduce,
+  switchMap,
+  tap,
   throwError,
 } from 'rxjs';
 import { Vehicle, VehicleResponse } from '../vehicle';
@@ -21,6 +24,10 @@ export class VehicleService {
   private vehicleClassSubject = new BehaviorSubject<string>('');
   vehicleClassSelected$ = this.vehicleClassSubject.asObservable();
 
+  //Action stream
+  private vehicleSelectedSubject = new BehaviorSubject<string>('');
+  vehicleSeleted$ = this.vehicleSelectedSubject.asObservable();
+
   constructor(private http: HttpClient) {}
 
   // All pages vehicles
@@ -31,6 +38,28 @@ export class VehicleService {
     reduce((acc, data) => acc.concat(data.results), [] as Vehicle[])
   );
 
+  //vehicle selected
+
+  seletedVehicle$ = this.vehicleSeleted$.pipe(
+    switchMap((vehicleName) =>
+      vehicleName.length
+        ? this.http
+            .get<VehicleResponse>(`${this.url}?search=${vehicleName}`)
+            .pipe(
+              map((data) => data.results[0]),
+              //Fill the random price if missing
+              map((v) => ({
+                ...v,
+                cost_in_credits: isNaN(Number(v.cost_in_credits))
+                  ? String(Math.random() * 100000)
+                  : v.cost_in_credits,
+              })),
+              tap((data) => console.log(data)),
+              catchError(this.handleError)
+            )
+        : of(null)
+    )
+  );
   // Vehicles filterd by selected class
   vehicles$ = combineLatest([
     this.allVehicles$,
@@ -51,6 +80,10 @@ export class VehicleService {
   // emits the selected vehicle class
   vehicleClassSelected(vehicleClass: string): void {
     this.vehicleClassSubject.next(vehicleClass);
+  }
+
+  onVehicleSelected(vehicle: string) {
+    this.vehicleSelectedSubject.next(vehicle);
   }
 
   private handleError(err: HttpErrorResponse): Observable<never> {
