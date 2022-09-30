@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
      <app-vehicle-list></app-vehicle-list>
   </div>
   <div class='col-md-8'>
-   vehicle details
+   <app-vehicle-details></app-vehicle-details>
   </div>
 </div>`,
 })

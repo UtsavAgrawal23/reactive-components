@@ -39,7 +39,6 @@ export class VehicleListComponent {
   }
 
   onVehicleSelected(vehicle: string) {
-    console.log(`${vehicle} test`);
     this.vehicleService.onVehicleSelected(vehicle);
   }
 }

@@ -84,7 +84,6 @@ export class VehicleService {
   }
 
   onVehicleSelected(vehicle: string) {
-    console.log("aaa")
     this.vehicleSelectedSubject.next(vehicle);
   }
 
